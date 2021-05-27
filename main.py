@@ -10,7 +10,14 @@ import csv
 from io import StringIO
 import requests
 from datetime import datetime
+clrcsv = input('Clear CSV?Y/n')
 
+if clrcsv.upper() == 'Y':
+    csv_file = open('emptyfile.csv', 'wb')
+    csv_file.write(0)
+    csv_file.close()
+else:
+    print('CSV file will remain unchanged')
 tickerinput = input('Ticker: ')
 data = yf.download(tickers=tickerinput, period='5d', interval="1m")
 openprice=data['Open']
@@ -24,12 +31,12 @@ csv_link = 'https://query1.finance.yahoo.com/v7/finance/download/' + tickerinput
 req = requests.get(csv_link)
 
 url_content = req.content
-csv_file = open('bruh.csv', 'wb')
+csv_file = open('emptyfile.csv', 'wb')
 csv_file.write(url_content)
 csv_file.close()
 
     
-raw_data = pd.read_csv('bruh.csv')
+raw_data = pd.read_csv('emptyfile.csv')
 print(raw_data)
 
     
@@ -62,3 +69,8 @@ data.plot(kind='scatter', x='High', y='Low')
 plt.plot(High,model.predict(High),color='red', linewidth=2)
 plt.scatter(High_new, Low_predict, color='red')
 plt.scatter(Low_new, High_predict, color='green')
+
+
+    
+
+
